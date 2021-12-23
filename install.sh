@@ -37,7 +37,8 @@ check_deps() {
 
 is_android_sdk_installed() {
     if [ ! -d ${PREFIX}/share/android-sdk ]; then
-        error_msg "Missing android sdk\nRedirecting you to installation guide and then you can run this script again. "
+        error_msg "Missing android sdk\nRedirecting you to installation guide and then you can run this script again."
+        sleep 4
         termux-open-url ${ANDROID_SDK_INSTALLATION_GUIDE}
         exit 1
     fi

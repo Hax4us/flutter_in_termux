@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/usr/bin/sh
+#!/data/data/com.termux/files/usr/bin/bash
 # 
 # Helper script to install & setup flutter
 # using debian as prooted environment
@@ -21,7 +21,7 @@ error_msg() {
 }
 
 check_deps() {
-    pkgs=("proot-distro" "curl" "git" "unzip" "termux-tools")
+    pkgs=("proot-distro" "curl" "git" "unzip")
 
     for pkg in pkgs; do
         if [ -z $(command -v ${pkg}) ]; then
@@ -29,6 +29,10 @@ check_deps() {
             apt install ${pkg} > /dev/null 2>&1
         fi
     done
+
+    if [ -z $(command -v termux-open-url) ]; then
+        msg "Installing termux-open-url"
+        apt install termux-tools > /dev/null 2>&1
 }
 
 is_android_sdk_installed() {
@@ -44,8 +48,8 @@ install_debian() {
 }
 
 install_flutter() {
-    proot-distro login flutter -- curl -O https://github.com/Hax4us/flutter_in_termux/releases/download/v${FLUTTER_VERSION}/Flutter-ARM64.zip 
-    proot-distro login flutter -- curl -O https://github.com/Hax4us/flutter_in_termux/releases/download/v${FLUTTER_VERSION}/gen_snapshot.zip
+    proot-distro login flutter -- curl -LO https://github.com/Hax4us/flutter_in_termux/releases/download/v${FLUTTER_VERSION}/Flutter-ARM64.zip 
+    proot-distro login flutter -- curl -LO https://github.com/Hax4us/flutter_in_termux/releases/download/v${FLUTTER_VERSION}/gen_snapshot.zip
     proot-distro login flutter -- unzip Flutter-ARM64.zip 
     proot-distro login flutter -- unzip gen_snapshot.zip
     proot-distro login flutter -- sed -i 's#export PATH=.*#&:~/flutter/bin#g' /etc/profile.d/termux-proot.sh
@@ -53,6 +57,8 @@ install_flutter() {
     proot-distro login flutter -- mv gen_snapshot /root/flutter/bin/cache/artifacts/engine/android-arm64-release/linux-arm64/
     proot-distro login flutter -- flutter doctor
     proot-distro login flutter -- flutter config --android-sdk $PREFIX/share/android-sdk
+    proot-distro login flutter -- apt update -y
+    proot-distro login flutter -- apt install openjdk-11-jdk -y
 }
 
 post_install_msg() {

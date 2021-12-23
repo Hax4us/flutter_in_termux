@@ -33,6 +33,7 @@ check_deps() {
     if [ -z $(command -v termux-open-url) ]; then
         msg "Installing termux-open-url"
         apt install termux-tools > /dev/null 2>&1
+    fi
 }
 
 is_android_sdk_installed() {

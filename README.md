@@ -4,7 +4,7 @@
 
 1. Execute the installer script
     ```
-    curl -s https://raw.githubusercontent.com/Hax4us/flutter_in_termux/master/install.sh | sh
+    curl -s https://raw.githubusercontent.com/Hax4us/flutter_in_termux/master/install.sh | bash -s
     ```
 
 2. Now login into debian by 

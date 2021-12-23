@@ -21,7 +21,7 @@ error_msg() {
 }
 
 check_deps() {
-    pkgs=("proot-distro" "curl" "git" "unzip")
+    pkgs=("proot-distro" "curl" "git" "unzip" "sed")
 
     for pkg in pkgs; do
         if [ -z $(command -v ${pkg}) ]; then
